@@ -1,0 +1,42 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 79
+exclude = ["**/migrations/*", ".venv/*", "venv/*", "manage.py"]
+lint.extend-select = ["I", "UP", "B", "C4", "SIM", "RUF"]
+lint.ignore = ["E203", "RUF002", "RUF003", "RUF001"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+mypy_path = ["."]
+python_version = "3.12"
+disallow_untyped_defs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_return_any = true
+no_implicit_optional = true
+exclude = '(migrations/|tests/|\.venv/|venv/|manage.py)'
+plugins = ["mypy_django_plugin.main"]
+
+[tool.django-stubs]
+django_settings_module = "core.settings"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+minversion = "8.0"
+addopts = "-q -ra --cov=app --cov-report term-missing --cov-branch"
+testpaths = ["tests/*"]
+pythonpath = ["."]
+
+[tool.coverage.run]
+omit = ["*/migrations/*", "*/__init__.py", "*/config.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "def __str__",
+    "if TYPE_CHECKING:"
+]
